@@ -6,6 +6,7 @@ My process is a perpetual cycle of curiosity, transforming complexity into under
 ## Will add existing and ongoing research and submodules soon
 
 [https://github.com/stochastic-sisyphus/prophetic-emergentomics](https://github.com/stochastic-sisyphus/prophetic-emergentomics)
-yeah one and done for today, this repo needs substantial population so thats all for now
-thanks
-bye
+[https://github.com/stochastic-sisyphus/feature-selection-optuna-remix](https://github.com/stochastic-sisyphus/feature-selection-optuna-remix)
+
+this repo needs substantial population so thats all for now
+
