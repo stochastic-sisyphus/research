@@ -1,17 +1,20 @@
-# Verification Reversal: Cascades and Synthetic Productivity in an AI-Mediated Economy
+# Verification Reversal: Cascades and Synthetic Productivity in an AI‑Mediated Economy
 
 **Vanessa Beck**
 
-Independent Researcher  
-vanessa.beckk1@gmail.com  
-ORCID: 0009-0008-6611-535X  
+Independent Researcher
+
+[vanessa.beckk1@gmail.com](mailto:vanessa.beckk1@gmail.com)
+
+ORCID: 0009-0008-6611-535X
+
 GitHub: stochastic-sisyphus
 
 Version 1.0 | January 2025
 
 *Author disclosure: No external funding. No conflicts of interest.*
 
------
+---
 
 ## Abstract
 
@@ -31,7 +34,7 @@ Generative AI has pushed the marginal cost of producing informational artifacts 
 
 **Paper status:** Conceptual framework with testable predictions; formal microfoundations are a planned extension.
 
------
+---
 
 ## 1. Introduction
 
@@ -59,27 +62,30 @@ This paper proceeds as follows:
 
 ### 1.2 Key Definitions
 
-To ensure precision, we define terms that will be used consistently throughout:
-
 > **Definition (Verification Reversal).** The regime in which the marginal cost of producing an artifact is lower than the marginal cost of verifying it, formally: ∂C_p/∂Y < ∂C_v/∂Y.
+> 
 
 > **Definition (Synthetic Productivity).** The appearance of output growth (rising measured TFP) when verification-adjusted, utility-relevant productivity stagnates or declines.
+> 
 
 > **Definition (Verification-Adjusted Productivity).** TFP computed using only verified artifacts, discounting unverified volume.
+> 
 
 > **Definition (Epistemic Debt).** The accumulated gap between system complexity and cognitive grasp: the stock of artifacts an organization relies upon but does not fully understand.
+> 
 
 > **Definition (Endogeneity Share).** The fraction of variance in key regressors attributable to model-generated content: α_t = Var(X_model,t) / Var(X_total,t).
+> 
 
 ### 1.3 Contributions
 
 This paper offers five contributions:
 
 1. **A forwarding game under verification reversal** in which agents rationally propagate unverified artifacts, generating information blockage even as throughput metrics soar.
-1. **A formal distinction between measured and verification-adjusted productivity**, showing how the gap can grow over time as verification capacity erodes.
-1. **An endogeneity share parameter** measuring how model-generated content contaminates the econometric substrates we use to detect problems.
-1. **Structural conditions under which self-correction fails**: “AI verifies AI” lacks independent rejection signals when models share training distributions, and market selection operates on lagging indicators.
-1. **A concrete empirical agenda** with testable hypotheses and instrumentation baselines.
+2. **A formal distinction between measured and verification-adjusted productivity**, showing how the gap can grow over time as verification capacity erodes.
+3. **An endogeneity share parameter** measuring how model-generated content contaminates the econometric substrates we use to detect problems.
+4. **Structural conditions under which self-correction fails**: “AI verifies AI” lacks independent rejection signals when models share training distributions, and market selection operates on lagging indicators.
+5. **A concrete empirical agenda** with testable hypotheses and instrumentation baselines.
 
 ### 1.4 Relation to Existing Literatures
 
@@ -103,7 +109,7 @@ Three domains exhibit verification reversal dynamics with measurable consequence
 
 These cases share a structure: artifact production accelerated while verification capacity remained constant or declined, forwarding behavior increased, and error detection shifted downstream or post-deployment.
 
------
+---
 
 ## 2. Literature Review
 
@@ -147,7 +153,7 @@ The argument assumes selection acts on the relevant variable. But market selecti
 
 High-verification firms are systematically selected out during the accumulation phase, precisely when their resilience would matter most. This is not a bug in the selection mechanism; it is the mechanism working as designed on the wrong objective.
 
------
+---
 
 ## 3. When Generation Becomes Cheaper than Verification
 
@@ -157,7 +163,12 @@ Let Y denote artifact volume per period. Let C_p(Y) and C_v(Y) be the costs of p
 
 > **Definition (Verification Reversal).** The verification reversal regime begins when:
 > 
+
+> 
+> 
+
 > ∂C_p/∂Y < ∂C_v/∂Y
+> 
 
 The inequality need not hold universally. It suffices that for a substantial class of “good enough” artifacts (the kind that clear immediate review, satisfy surface criteria, and raise no obvious flags) incremental production is easier than incremental verification.
 
@@ -175,7 +186,7 @@ where c₀Y is the baseline linear cost, c₁Y^α with α > 1 captures fatigue e
 
 *Interpretation*: This non-linearity implies that even if C_p remains constant, verification costs can explode as volume scales, accelerating the transition to cascade equilibria.
 
------
+---
 
 ## 4. A Forwarding Game and Rational Cascades
 
@@ -221,9 +232,18 @@ Let B_net = B - λD denote the net benefit of catching an error (verification be
 
 > **Proposition 1 (Forwarding Threshold).** Agent i forwards if and only if:
 > 
+
+> 
+> 
+
 > μ_i > 1 - (C_v - C_f) / B_net
 > 
+
+> 
+> 
+
 > When C_v - C_f ≥ B_net, the threshold is non-positive, so the condition holds for all μ_i ∈ [0,1]: agents forward regardless of beliefs about validity.
+> 
 
 *Proof sketch.* The inequality follows directly from expected utility comparison. Under verification reversal, C_v - C_f is large. If this cost gap exceeds B_net (the net benefit of catching an error), then 1 - (C_v - C_f)/B_net ≤ 0, and the forwarding condition is satisfied for any posterior μ_i, including posteriors that place high probability on invalidity. Forwarding becomes the dominant action not because agents believe artifacts are valid, but because verification costs exceed the expected benefit of catching errors. ∎
 
@@ -234,10 +254,11 @@ Let B_net = B - λD denote the net benefit of catching an error (verification be
 As forwarding becomes near-universal, actions lose informational content. Almost everyone forwards. Few agents perform deep checks. Observing a forward tells you nothing about validity, only that the previous agent faced the same incentives you face.
 
 > **Definition (Information Blockage).** A state in which observed actions are uninformative about artifact validity: the mutual information between the action sequence (a_1, …, a_n) and the true state ω approaches zero, even as throughput metrics remain high.
+> 
 
 *Interpretation*: This is not collective irrationality. It is individual rationality aggregating to collective blindness. Each agent optimizes correctly given their local information and incentive structure. The system outcome is a cascade that no one chose and no one can unilaterally escape.
 
------
+---
 
 ## 5. Synthetic Productivity and Regime Misidentification
 
@@ -257,16 +278,26 @@ Under verification reversal, the proxy breaks. Y_t increasingly reflects AI-gene
 These are structurally different production functions with different bottlenecks, different scaling properties, and different meanings of “more output.”
 
 > **Definition (Regime Misidentification).** Applying old-regime inference rules to new-regime data, such that the econometrician sees productivity growth because the model cannot distinguish artifacts-that-required-thought from artifacts-that-required-tokens.
+> 
 
 **Assumption (Volume-Value Decoupling).** Under verification reversal, artifact volume Y_t can increase while the fraction of artifacts that are verified (and thus reliably value-producing) declines. Formally: dY_t/dt > 0 while d(V(Y_t, θ_t)/Y_t)/dt < 0.
 
 > **Claim 1 (Synthetic Productivity).** Under Volume-Value Decoupling, measured TFP rises while verification-adjusted TFP stagnates or declines:
 > 
-> d(TFP^measured)/dt > 0  while  d(TFP^actual)/dt ≤ 0
-> 
-> The productivity miracle is an accounting error waiting for an audit.
 
------
+> 
+> 
+
+> d(TFP^measured)/dt > 0 while d(TFP^actual)/dt ≤ 0
+> 
+
+> 
+> 
+
+> The productivity miracle is an accounting error waiting for an audit.
+> 
+
+---
 
 ## 6. Endogenous Measurement: Models Eating Their Own Outputs
 
@@ -274,7 +305,7 @@ The problem deepens when we trace measurement data to their sources.
 
 Econometric analysis assumes:
 
-Y_t = βX_t + ε_t  with  E[X_t ε_t] = 0
+Y_t = βX_t + ε_t with E[X_t ε_t] = 0
 
 The orthogonality condition requires that regressors be independent of the error term. In an AI-mediated economy, the data used to construct X_t increasingly include model-generated artifacts:
 
@@ -296,7 +327,12 @@ Define the model-generated component of key regressors as X_model,t and the tota
 
 > **Definition (Endogeneity Share).**
 > 
+
+> 
+> 
+
 > α_t = Var(X_model,t) / Var(X_total,t)
+> 
 
 As α_t → 1, diagnostics and stability tests are increasingly performed on data that has been filtered through the very models we are trying to evaluate.
 
@@ -310,13 +346,22 @@ where f captures the smoothing effect of model-generated content on apparent err
 
 > **Claim 2 (Recognition Lag Extension).**
 > 
+
+> 
+> 
+
 > Under the Signal Degradation assumption, dτ/dα > 0.
 > 
+
+> 
+> 
+
 > Higher endogeneity share extends recognition lags. Problems take longer to surface. By the time they surface, they have compounded.
+> 
 
 *Intuition.* When models generate data that feeds back into measurement, they optimize for plausibility within the training distribution. Anomalies that would otherwise surface as large residuals get smoothed toward the mode. The signal that something is wrong becomes harder to detect, not because the underlying problem is smaller but because the measurement apparatus has been compromised.
 
------
+---
 
 ## 7. Verification-Adjusted Productivity and the Verification Treadmill
 
@@ -324,7 +369,7 @@ Artifact volume is not welfare. The distinction matters.
 
 Define verification-adjusted utility as:
 
-V: ℝ⁺ × [0,1] → ℝ⁺,  V(Y, θ) = ∫₀^Y v(y, θ) dy
+V: ℝ⁺ × [0,1] → ℝ⁺, V(Y, θ) = ∫₀^Y v(y, θ) dy
 
 where θ is verification capacity and v(y, θ) ∈ [0,1] is the effective verification rate, the probability that artifact y has been checked against reality.
 
@@ -338,13 +383,18 @@ TFP_t^actual = V(Y_t, θ_t) / F(K_t, L_t)
 
 As outputs multiply, verification resources spread thinner. A simple representation:
 
-v(Y, θ) = θ · g(Y/θ),  g’(·) < 0
+v(Y, θ) = θ · g(Y/θ), g’(·) < 0
 
 The verification rate per artifact declines as the ratio of artifacts to verification capacity rises. This is not a contingent fact about current organizations; it is a structural property of the production function. Verification does not scale the way generation scales.
 
 > **Prediction 1 (Wedge Growth).** If dY_t/dt > 0 while dθ_t/dt ≤ 0, then:
 > 
+
+> 
+> 
+
 > d/dt(TFP_t^measured - TFP_t^actual) > 0
+> 
 
 ### 7.2 Epistemic Debt as a Stock
 
@@ -352,7 +402,12 @@ Let C_s(t) denote the complexity (or volume) of epistemically loaded artifacts: 
 
 > **Definition (Epistemic Debt).**
 > 
+
+> 
+> 
+
 > D_e(T) = ∫₀^T (C_s(t) - G_c(t)) dt
+> 
 
 Under sustained underuse of verification tasks, verification skill decays:
 
@@ -364,7 +419,7 @@ The organization loses not merely the time to verify but the ability. Epistemic 
 
 *Interpretation*: If successive model generations are trained on synthetic data produced by predecessors, the system consumes the epistemic capital accumulated in the historical corpus of human-generated, verified information. Model collapse studies show that training on synthetic data leads to distribution shift where models forget tail events and over-index on probable outputs. In “replace” scenarios where human data is entirely replaced by synthetic data, performance degrades exponentially. This suggests current productivity gains depend on unreplaced stocks of verified human knowledge, a finite resource under active depletion.
 
------
+---
 
 ## 8. Why Self-Correction Mechanisms Fail
 
@@ -380,7 +435,12 @@ When a language model reviews the output of another language model, the independ
 
 > **Definition (Cross-Model Error Correlation).**
 > 
+
+> 
+> 
+
 > ρ_{M₁,M₂} = Cov(ε_{M₁}, ε_{M₂}) / (σ_{M₁} σ_{M₂})
+> 
 
 Robust cross-verification requires ρ → 0. When ρ is high, agreement between models increases surface coherence without increasing truth-sensitivity. Two models agreeing tells you they agree. It does not tell you they are correct.
 
@@ -404,7 +464,7 @@ This creates a structural parallel to Hyman Minsky’s *Financial Instability Hy
 
 Let π_t be an observable performance metric: throughput, velocity, time-to-ship, artifacts-per-quarter. Let verification-adjusted utility remain latent, unobservable until crisis. During the cascade regime:
 
-π_t = f(Y_t, θ_{t-ℓ})  with  ∂f/∂Y > 0,  ∂f/∂θ ≈ 0
+π_t = f(Y_t, θ_{t-ℓ}) with ∂f/∂Y > 0, ∂f/∂θ ≈ 0
 
 Observable performance improves with artifact volume. Verification capacity has approximately zero effect on observable performance, until the forcing event that reveals the gap.
 
@@ -413,6 +473,7 @@ For markets to correct the cascade, epistemic debt must be priced before it is c
 Organizations that maintain verification capacity incur visible costs: slower throughput, larger review teams, longer cycle times. They are punished in every quarter where no crisis occurs. Organizations that strip verification capacity show better numbers, attract more investment, win more contracts, hire away the talent from their slower competitors.
 
 > **Conjecture (Selection Against Verification).** The organizations best positioned to weather a forcing event do not survive to the forcing event. High-verification strategies are systematically selected out during the accumulation phase.
+> 
 
 *Supporting argument.* This conjecture requires a selection model we do not fully specify here. The intuition draws on Minsky’s Financial Instability Hypothesis: strategies that appear conservative during stable periods are punished by competitive dynamics until they become rare. When the crisis arrives, the survivors are precisely those who were least prepared. Formalizing this requires modeling firm entry/exit, capital allocation, and the relationship between observable metrics and latent verification capacity. We leave this for future work but note that the pattern is empirically documented in financial regulation, where capital requirements exist precisely because market selection alone does not preserve adequate reserves.
 
@@ -426,7 +487,7 @@ Market selection operates on throughput metrics that reward low-θ strategies. I
 
 Neither channel has access to an independent rejection signal. Neither channel can price epistemic debt before forcing events demand payment. By the time the debt is called, the capacity to pay has already been competed away.
 
------
+---
 
 ## 9. Empirical Hypotheses and Instrumentation
 
@@ -435,12 +496,12 @@ Theory without measurement is philosophy. This section operationalizes the frame
 ### Testable Predictions (Summary)
 
 1. The wedge between measured and verification-adjusted productivity grows over time (H1)
-1. Cascade fragility increases with network density and chain length (H2)
-1. Endogeneity share in measurement substrates rises over time (H3)
-1. Feedback loops exhibit learning collapse as incidents stop changing processes (H4)
-1. Verification capacity and capability erode under sustained underuse (H5)
-1. Internal organizational language converges toward model-preferred distributions (H6)
-1. Irreversible lock-in accumulates through tool deprecation and skill-pipeline changes (H7)
+2. Cascade fragility increases with network density and chain length (H2)
+3. Endogeneity share in measurement substrates rises over time (H3)
+4. Feedback loops exhibit learning collapse as incidents stop changing processes (H4)
+5. Verification capacity and capability erode under sustained underuse (H5)
+6. Internal organizational language converges toward model-preferred distributions (H6)
+7. Irreversible lock-in accumulates through tool deprecation and skill-pipeline changes (H7)
 
 ### 9.1 H1: Divergence Between Measured and Verification-Adjusted Productivity
 
@@ -510,7 +571,7 @@ When incidents do not change processes, the organization has stopped learning.
 
 **Hypothesis:**
 
-dθ_t/dt ≤ 0,  dκ_t/dt < 0
+dθ_t/dt ≤ 0, dκ_t/dt < 0
 
 Verification capacity (headcount, time, tools) stagnates or declines. Verification capability (skill, accuracy) actively decays.
 
@@ -532,7 +593,7 @@ where “substantive comment” requires code modification or design discussion 
 
 **Hypothesis:**
 
-dγ_t/dt > 0  ⟹  ∂Fragility/∂γ > 0
+dγ_t/dt > 0 ⟹ ∂Fragility/∂γ > 0
 
 where γ_t measures coupling between internal language and model-preferred distributions.
 
@@ -554,7 +615,7 @@ Some organizational changes are difficult to reverse. Deprecating tools, elimina
 - **Skill pipeline**: Monitor hiring criteria, training investment, promotion patterns in verification functions.
 - **Architectural commitments**: Count removal of validation gates, adoption of auto-approve workflows, integration depth of model-generated inputs.
 
------
+---
 
 ## 10. Discussion and Implications
 
@@ -606,7 +667,7 @@ This framework applies when verification costs exceed production costs for a sub
 
 The computational substrate for AI-mediated production imposes hard physical limits. Global data center electricity consumption is projected to double between 2022 and 2026, with AI workloads driving a substantial share of this growth (International Energy Agency, 2024). This creates a binding constraint: measured productivity gains from artifact generation are partially offset by rising energy costs and infrastructure requirements. The wedge between digital throughput and physical resource consumption suggests that synthetic productivity, even when measured correctly, may face diminishing returns as energy efficiency gains decelerate and computational demands scale super-linearly with model capabilities.
 
------
+---
 
 ## 11. Conclusion
 
@@ -615,10 +676,10 @@ Verification reversal changes equilibrium behavior and the meaning of measured o
 This paper has provided:
 
 1. A sequential forwarding model (Proposition 1) for cascade formation under high verification costs, showing how rational individual behavior aggregates to collective informational blockage.
-1. A formal separation of measured from verification-adjusted productivity (Claim 1), with conditions under which the wedge grows over time.
-1. An endogeneity share parameter (Claim 2) capturing measurement contamination from model-generated content.
-1. Structural analysis of why “AI verifies AI” lacks independent rejection signals and why market selection may operate on lagging indicators that reward low-verification strategies (Conjecture).
-1. A falsifiable empirical agenda with instrumentation baselines for measuring verification capacity, epistemic debt, cascade fragility, and endogeneity share.
+2. A formal separation of measured from verification-adjusted productivity (Claim 1), with conditions under which the wedge grows over time.
+3. An endogeneity share parameter (Claim 2) capturing measurement contamination from model-generated content.
+4. Structural analysis of why “AI verifies AI” lacks independent rejection signals and why market selection may operate on lagging indicators that reward low-verification strategies (Conjecture).
+5. A falsifiable empirical agenda with instrumentation baselines for measuring verification capacity, epistemic debt, cascade fragility, and endogeneity share.
 
 The framework predicts that conventional productivity statistics will overstate welfare gains from generative AI by ignoring verification costs and epistemic debt accumulation. The measured miracle may be borrowed time.
 
@@ -628,13 +689,13 @@ Whether we have maintained the capacity to pay is a choice we are making now, in
 
 Reality is not free. Neither is your lunch.
 
------
+---
 
 ## Acknowledgments
 
 The “Double Minsky” framework in this paper owes an obvious debt to both Marvin Minsky and Hyman Minsky, whose work on distributed intelligence and financial instability respectively illuminates the dynamics of epistemic leverage. The parallel was first noticed (as many things are) in conversation with a cat named Marvin, who has demonstrated throughout his life that verification capacity, once lost, can sometimes be rebuilt, but only with patience, resources, and a willingness to invest when the returns are uncertain.
 
------
+---
 
 ## References
 
@@ -662,7 +723,7 @@ Peng, S., Kalliamvakou, E., Cihon, P., & Demirer, M. (2023). The impact of AI on
 
 Wooldridge, J. M. (2010). *Econometric Analysis of Cross Section and Panel Data* (2nd ed.). MIT Press.
 
------
+---
 
 ## Appendix A: Instrumentation Details
 
