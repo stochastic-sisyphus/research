@@ -1,6 +1,6 @@
 # Verification Reversal
 
-## Verification Reversal: Cascades and Synthetic Productivity in an AI‑Mediated Economy
+Cascades and Synthetic Productivity in an AI‑Mediated Economy
 
 **Vanessa Beck**
 
@@ -567,6 +567,8 @@ where L_t is a lock-in stock driven by tool deprecation, gate removal, and skill
 - Post-deployment defect density
 - Customer-reported error rates and severity distribution
 
+Note that time spent reading code vs. writing it typically follows a 10:1 ratio (Martin, 2008); AI assistants optimize the writing phase while potentially increasing cognitive load in verification.
+
 **Implementation sketch:** Pair production logs with review/correction logs and compute an estimand of the wedge (Δ) over time.
 
 ### A.2 H2: Cascade Fragility — Network Analysis
@@ -698,6 +700,8 @@ Maintaining diverse verification channels (humans with different expertise, mode
 ### 10.5 Limitations and Scope Conditions
 
 This framework applies when verification costs exceed production costs for a substantial class of artifacts. It is limited in domains with tight formal contracts, high-coverage automated tests, low-volume high-stakes decisions with enforced audit gates, or fast and unambiguous feedback loops.
+
+The computational substrate also imposes physical constraints—data center electricity consumption is projected to double by 2026 (IEA, 2024)—suggesting synthetic productivity may face resource limits independent of verification dynamics.
 
 ---
 
