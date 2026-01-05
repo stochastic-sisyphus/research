@@ -129,6 +129,25 @@ Three domains exhibit verification reversal dynamics with measurable consequence
 
 These cases share a structure: artifact production accelerated while verification capacity remained constant or declined, forwarding behavior increased, and error detection shifted downstream or post-deployment.
 
+### 1.7 Definitions and Notation Preview
+
+> **Definition (Artifact).** An *artifact* is a discrete unit of informational output: a code commit, a report section, an analysis, a forecast, a recommendation. Artifacts are the objects that flow through organizational workflows and are either verified or forwarded.
+
+**Core notation.** The following symbols appear throughout; formal definitions are in Appendix A.
+
+|Symbol    |Meaning                                                |
+|----------|-------------------------------------------------------|
+|ω ∈ {H, L}|Artifact quality state (High/Low)                      |
+|Y_t       |Artifact volume at time t                              |
+|θ_t       |Verification capacity (organizational resource)        |
+|κ_t       |Verification skill (ability to detect errors)          |
+|α_t       |Endogeneity share (fraction of model-generated content)|
+|τ         |Recognition lag (time to detect problems)              |
+|π^cut     |Indifference cutoff for verify/forward decision        |
+|π^F, π^V  |Forward and verify cascade thresholds                  |
+
+*Working paper note:* This paper develops a theoretical framework with measurement implications. Formal microfoundations for the selection dynamics (Conjecture 1) are planned for a follow-up paper. Empirical implementation of the proposed instrumentation is ongoing.
+
 -----
 
 ## 2. Literature Review
@@ -216,7 +235,11 @@ Agent i also observes the sequence of actions a₁, …, a_{i-1} taken by predec
 
 **Actions.** Agent i chooses action a_i ∈ {V, F}.
 
-> **Assumption 3 (Payoff Structure).** Payoffs depend on action, true state, and downstream outcomes:
+> **Assumption 3 (Verification as Ground-Truth Revelation).** If agent i chooses to verify (a_i = V), the true state ω is revealed perfectly to agent i. Verification is a costly but definitive check against external reality. This is the key asymmetry: production is cheap but uninformative; verification is expensive but resolves uncertainty completely.
+> 
+> *Policy after revelation:* If verification reveals ω = L (low quality), the agent blocks the artifact and receives benefit B net of reputational cost R. If verification reveals ω = H (high quality), the agent forwards the artifact. The expected payoff from verification thus depends on the probability of catching a low-quality artifact.
+
+> **Assumption 4 (Payoff Structure).** Payoffs depend on action, true state, and downstream outcomes:
 > 
 > |           |ω = H (High quality)|ω = L (Low quality)|
 > |-----------|--------------------|-------------------|
@@ -227,11 +250,13 @@ Agent i also observes the sequence of actions a₁, …, a_{i-1} taken by predec
 > 
 > - c_V: verification cost
 > - c_F: forwarding cost (c_F << c_V)
-> - B: benefit of catching a low-quality artifact
+> - B: benefit of catching a low-quality artifact (enabled by Assumption 3: verification reveals ω = L)
 > - R: reputational cost of blocking (stopping the line)
 > - D_i: agent i’s exposure to deployment failure costs
 
 We assume D is spread across agents or absorbed by the organization, so individual exposure to D may be small.
+
+> **Remark (Action Cascade vs. Adoption Cascade).** The cascade object in this paper is an *action cascade*: agents converge on forwarding (or verifying) regardless of private signals. This differs from standard herding models where agents adopt beliefs about a state. Here, information blockage occurs in the *decision to check*, not in beliefs about quality. Agents in a forward cascade may privately doubt artifact quality but rationally choose not to verify.
 
 **Belief updating.** Let π_i = P(ω = H | s_i, a₁, …, a_{i-1}) denote agent i’s posterior belief.
 
@@ -439,7 +464,7 @@ where X_t^model = h(Model_t(Y_{t-1}, X_{t-1}, θ)).
 
 ### 6.2 Endogeneity Bias
 
-> **Assumption 4 (Model Output Optimization).** Model-generated content is optimized for plausibility within the training distribution:
+> **Assumption 5 (Model Output Optimization).** Model-generated content is optimized for plausibility within the training distribution:
 > 
 > X_t^model = argmax_x P_train(x | context_t)
 > 
@@ -495,7 +520,7 @@ Let C_s(t) denote the complexity (or volume) of epistemically loaded artifacts�
 
 ### 7.3 Verification Skill Decay
 
-> **Assumption 5 (Skill Decay Under Underuse).** Under sustained underuse of verification tasks, verification skill decays:
+> **Assumption 6 (Skill Decay Under Underuse).** Under sustained underuse of verification tasks, verification skill decays:
 > 
 > dκ_t/dt = -δ(κ_t - κ̲) + λ·(verification activity)_t
 > 
@@ -527,11 +552,11 @@ Effective verification requires an independent rejection signal: a check that ca
 > 
 > where ε_{M_i} is model i’s error (deviation from ground truth).
 
-> **Assumption 6 (Shared Training Distribution).** Models M₁ and M₂ are trained on overlapping data distributions with shared optimization objectives (e.g., cross-entropy minimization over similar text corpora).
+> **Assumption 7 (Shared Training Distribution).** Models M₁ and M₂ are trained on overlapping data distributions with shared optimization objectives (e.g., cross-entropy minimization over similar text corpora).
 
 > **Proposition 5 (Recursive Verification Fails Under Correlated Error).** Suppose M₂ is used to verify outputs of M₁. Effective verification requires independent rejection signals: ρ₁₂ ≈ 0.
 > 
-> Under Assumption 6 (shared training distribution), ρ₁₂ > 0. The verifier’s errors correlate with the generator’s errors. Agreement between models increases surface coherence without increasing truth-sensitivity:
+> Under Assumption 7 (shared training distribution), ρ₁₂ > 0. The verifier’s errors correlate with the generator’s errors. Agreement between models increases surface coherence without increasing truth-sensitivity:
 > 
 > P(M₂ accepts | M₁ correct) ≈ P(M₂ accepts | M₁ incorrect)
 > 
@@ -561,13 +586,13 @@ Using one frontier generative model to verify another violates this requirement.
 
 > **Definition 14 (Latent Verification Value).** Let V_t(θ) denote the value of verification capacity θ. This value remains latent (unobservable in π_t) until a forcing event occurs.
 
-> **Assumption 7 (Selection on Observables).** Market selection (investment, hiring, contracts, survival) operates on observable π_t, not on latent V_t(θ):
+> **Assumption 8 (Selection on Observables).** Market selection (investment, hiring, contracts, survival) operates on observable π_t, not on latent V_t(θ):
 > 
 > Selection pressure_t = f(π_t),  ∂f/∂π > 0
 
-> **Assumption 8 (Replicator Dynamics).** Population shares of organizational strategies evolve according to replicator dynamics: strategies with above-average observable performance gain market share, while those with below-average performance lose share. Observable performance π_t is decreasing in verification capacity: ∂π/∂θ < 0.
+> **Assumption 9 (Replicator Dynamics).** Population shares of organizational strategies evolve according to replicator dynamics: strategies with above-average observable performance gain market share, while those with below-average performance lose share. Observable performance π_t is decreasing in verification capacity: ∂π/∂θ < 0.
 
-> **Conjecture 1 (Adverse Selection Against Verification).** Under verification reversal and Assumptions 7-8:
+> **Conjecture 1 (Adverse Selection Against Verification).** Under verification reversal and Assumptions 8-9:
 > 
 > (i) High-verification strategies reduce π_t (slower throughput, higher costs) but increase V_t(θ).
 > 
@@ -618,6 +643,40 @@ Theory without measurement is philosophy. This section operationalizes the frame
 |H5        |Verification capacity erodes             |dθ_t/dt ≤ 0, dκ_t/dt < 0   |Capacity and skill stable                 |
 |H6        |Language convergence                     |dγ_t/dt > 0                |Internal language remains distinct        |
 |H7        |Irreversible lock-in accumulates         |dL_t/dt > 0                |Lock-in stock stable                      |
+
+### Feasibility Table: Data Sources and Operational Settings
+
+|Hypothesis               |Primary Data Sources                                                           |Operational Settings                                     |Measurement Feasibility                                           |
+|-------------------------|-------------------------------------------------------------------------------|---------------------------------------------------------|------------------------------------------------------------------|
+|H1 (Productivity wedge)  |GitHub/GitLab commit logs, Jira ticket data, code review timestamps            |Software development teams with version control          |High: data exists, requires pairing production and correction logs|
+|H2 (Cascade fragility)   |PR dependency graphs, approval chains, incident postmortems                    |Organizations with documented workflows                  |Medium: requires reconstructing artifact flow graphs              |
+|H3 (Endogeneity share)   |AI-disclosure metadata, watermarking systems, classifier-detected provenance   |Firms with AI usage tracking policies                    |Medium: provenance tagging not yet standard                       |
+|H4 (Learning collapse)   |Incident management systems (PagerDuty, Opsgenie), process change logs         |DevOps/SRE teams with mature incident response           |High: data exists in ITSM systems                                 |
+|H5 (Verification erosion)|Review time logs, headcount data, seeded defect injection experiments          |Engineering organizations willing to run controlled tests|Medium: seeded defects require experimental setup                 |
+|H6 (Language convergence)|Internal document corpora, email/Slack archives, template repositories         |Organizations with searchable knowledge bases            |Medium: requires text analysis pipeline                           |
+|H7 (Lock-in accumulation)|Tool deprecation logs, hiring criteria evolution, architecture decision records|Organizations with ADR practices                         |Low-Medium: historical data often incomplete                      |
+
+### Worked Example: Software Development Instrumentation (Illustrative)
+
+To illustrate concrete measurement, consider a hypothetical software development organization with N developers over T months. The numbers below are illustrative, not empirical results.
+
+**Computing θ_t (verification capacity):**
+
+θ_t = (Review hours with substantive comments)_t / (Total production hours)_t
+
+Operationally: extract from GitHub PR metadata. Count reviews where reviewer requested changes or left comments requiring code modification (excluding approvals, LGTMs, typo-only fixes). Divide by total hours logged to code production.
+
+*Expected baseline (illustrative):* In pre-AI-assistance regimes, θ_t ≈ 0.15-0.25 (roughly 1 hour of substantive review per 4-6 hours of coding). Under H5, we predict θ_t declining toward 0.05-0.10.
+
+**Computing correction burden proxy:**
+
+Churn_t = (Lines reverted within 14 days)_t / (Lines committed)_t
+
+*Expected relationship:* If H1 holds, Churn_t should increase as throughput (commits per developer) increases, even while measured productivity (commits/hour) rises.
+
+**Illustrative calculation (hypothetical numbers):** Suppose a team of 10 developers produces 5,000 lines/month with Churn_t = 0.08 pre-AI. Post-AI, they produce 12,000 lines/month with Churn_t = 0.15. Measured productivity rose 140%. But correction burden (lines requiring rework) rose from 400 to 1,800 lines/month (350%). The wedge is opening.
+
+*Data source note:* GitClear (2024) reports aggregate churn trends directionally consistent with this pattern across their 153M-line dataset, though they do not compute θ_t directly and the specific numbers above are illustrative rather than drawn from their report.
 
 ### 9.1 H1: Divergence Between Measured and Verification-Adjusted Productivity
 
@@ -776,9 +835,9 @@ Brynjolfsson, E., Li, D., & Raymond, L. R. (2023). Generative AI at work. *NBER 
 
 Gale, D., & Hellwig, M. (1985). Incentive-compatible debt contracts: The one-period problem. *Review of Economic Studies*, 52(4), 647-663.
 
-GitClear. (2024). *Coding on Copilot: 2023 Data Suggests Downward Pressure on Code Quality (incl. 2024 projections)*. Technical report. https://www.gitclear.com/coding_on_copilot_data_shows_ais_downward_pressure_on_code_quality
+GitClear. (2024). *Coding on Copilot: 2023 Data Suggests Downward Pressure on Code Quality (incl. 2024 projections)*. Technical report. Retrieved January 2025 from https://www.gitclear.com/coding_on_copilot_data_shows_ais_downward_pressure_on_code_quality
 
-IEA. (2024). *Electricity 2024*. IEA, Paris. https://www.iea.org/reports/electricity-2024. Licence: CC BY 4.0.
+International Energy Agency. (2024). *Electricity 2024: Analysis and Forecast to 2026*. IEA, Paris. Retrieved January 2025 from https://www.iea.org/reports/electricity-2024. Licence: CC BY 4.0.
 
 Martin, R. C. (2008). *Clean Code: A Handbook of Agile Software Craftsmanship*. Prentice Hall.
 
