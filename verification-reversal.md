@@ -1,6 +1,6 @@
-# Verification Reversal 
+# Verification Reversal
 
-## Verification Reversal - Cascades and Synthetic Productivity in an AI‑Mediated Economy
+## Verification Reversal: Cascades and Synthetic Productivity in an AI‑Mediated Economy
 
 **Vanessa Beck**
 
@@ -70,7 +70,7 @@ This paper proceeds as follows:
 
 - **Proposition 1 (Section 4.2):** formally derived from model primitives and payoff inequalities (proof sketch included).
 - **Claims 1–2 (Sections 5–6):** derived implications under stated reduced-form assumptions. These are conditional predictions.
-- **Selection mechanism (Section 8.3):** a verbal hypothesis with a toy sketch and clear modeling gaps (entry/exit and capital isn’t fully specified).
+- **Selection mechanism (Section 8.3):** a verbal hypothesis with a schematic model and clear modeling gaps (entry/exit and capital isn’t fully specified).
 - **Predictions / hypotheses (Section 9):** operationalizations intended to make the framework falsifiable.
 
 > **Definition (Verification Reversal).** The regime in which the marginal cost of producing an artifact is lower than the marginal cost of verifying it, formally: ∂C_p/∂Y < ∂C_v/∂Y.
