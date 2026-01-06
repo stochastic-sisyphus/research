@@ -12,7 +12,7 @@ ORCID: 0009-0008-6611-535X
 
 GitHub: stochastic-sisyphus
 
-Version 1.0 | January 2025
+Version 1.0 | January 2026
 
 *Author disclosure: No external funding. No conflicts of interest.*
 
@@ -31,8 +31,6 @@ A distinct contamination channel compounds these dynamics. As model-generated co
 We examine two candidate self-correction mechanisms—recursive AI verification and market selection—and identify structural conditions under which both fail. Recursive verification lacks independent rejection signals when models share training distributions; market selection operates on lagging proxies that favor low-verification strategies until crises force revaluation.
 
 Finally, we propose an empirical agenda with instrumentation baselines, anchored by a GitHub pull-request testbed, to measure verification intensity, remediation burden, cascade fragility, substrate contamination, and the accumulation of epistemic debt. The framework yields eight testable hypotheses with explicit falsification conditions.
-
-The dashboard can stay green while epistemic debt compounds in the dark. This paper is an attempt to read the balance sheet before the audit.
 
 **Keywords:** Information cascades; Verification costs; Generative AI; Total factor productivity; Endogeneity; Epistemic debt; Adversarial robustness; Market selection.
 
@@ -83,38 +81,17 @@ This paper proceeds as follows:
 - **Selection mechanism (Section 8.3):** a verbal hypothesis with a schematic model and clear modeling gaps (entry/exit and capital isn’t fully specified).
 - **Predictions / hypotheses (Section 9):** operationalizations intended to make the framework falsifiable.
 
-> **Definition (Verification Reversal).** The regime in which the marginal cost of producing an artifact is lower than the marginal cost of verifying it, formally: ∂C_p/∂Y < ∂C_v/∂Y.
-> 
+**Definition (Verification Reversal).** The regime in which the marginal cost of producing an artifact is lower than the marginal cost of verifying it, formally: ∂C_p/∂Y < ∂C_v/∂Y.
 
-> 
-> 
+**Definition (Synthetic Productivity).** The appearance of output growth (rising measured TFP) when verification-adjusted, utility-relevant productivity stagnates or declines.
 
-> **Definition (Synthetic Productivity).** The appearance of output growth (rising measured TFP) when verification-adjusted, utility-relevant productivity stagnates or declines.
-> 
+**Definition (Verification-Adjusted Productivity).** TFP computed using only verified artifacts, discounting unverified volume.
 
-> 
-> 
+**Definition (Epistemic Debt).** The accumulated gap between system complexity and cognitive grasp: the stock of artifacts an organization relies upon but does not fully understand.
 
-> **Definition (Verification-Adjusted Productivity).** TFP computed using only verified artifacts, discounting unverified volume.
-> 
+**Definition (Endogeneity Share).** The fraction of variance in key regressors attributable to model-generated content: α_t = Var(X_model,t) / Var(X_total,t).
 
-> 
-> 
-
-> **Definition (Epistemic Debt).** The accumulated gap between system complexity and cognitive grasp: the stock of artifacts an organization relies upon but does not fully understand.
-> 
-
-> 
-> 
-
-> **Definition (Endogeneity Share).** The fraction of variance in key regressors attributable to model-generated content: α_t = Var(X_model,t) / Var(X_total,t).
-> 
-
-> 
-> 
-
-> **Definition (Attack Surface).** The set of verification bottlenecks and cascade entry points exploitable by adversaries seeking to inject malicious or misleading artifacts into propagation chains.
-> 
+**Definition (Attack Surface).** The set of verification bottlenecks and cascade entry points exploitable by adversaries seeking to inject malicious or misleading artifacts into propagation chains.
 
 ### 1.3 Contributions
 
@@ -189,14 +166,9 @@ The defining condition is simple to state and difficult to escape once it binds.
 
 Let Y denote artifact volume per period. Let C_p(Y) and C_v(Y) be the costs of producing and verifying that volume.
 
-> **Definition (Verification Reversal).** The verification reversal regime begins when:
-> 
+**Definition (Verification Reversal).** The verification reversal regime begins when:
 
-> 
-> 
-
-> ∂C_p/∂Y < ∂C_v/∂Y
-> 
+∂C_p/∂Y < ∂C_v/∂Y
 
 The inequality need not hold universally. It suffices that for a substantial class of “good enough” artifacts (the kind that clear immediate review, satisfy surface criteria, and raise no obvious flags) incremental production is easier than incremental verification.
 
@@ -311,20 +283,11 @@ C_v - C_f > (1 - μ_i) · (B - λD)
 
 Let B_net = B - λD. Rearranging:
 
-> **Proposition 1 (Forwarding Threshold).** Agent i forwards if and only if:
-> 
+**Proposition 1 (Forwarding Threshold).** Agent i forwards if and only if:
 
-> 
-> 
+μ_i > 1 - (C_v - C_f) / B_net
 
-> μ_i > 1 - (C_v - C_f) / B_net
-> 
-
-> 
-> 
-
-> When C_v - C_f ≥ B_net, the threshold is non-positive, so the condition holds for all μ_i ∈ [0,1]: agents forward regardless of beliefs.
-> 
+When C_v - C_f ≥ B_net, the threshold is non-positive, so the condition holds for all μ_i ∈ [0,1]: agents forward regardless of beliefs.
 
 *Proof sketch.* Follows directly from expected utility comparison.
 
@@ -332,10 +295,11 @@ Let B_net = B - λD. Rearranging:
 
 ### 4.3 Information Blockage
 
-> **Definition (Information Blockage).** A state in which observed actions are uninformative about artifact validity: the mutual information between the action sequence (a₁, …, a_n) and the true state ω approaches zero, even as throughput remains high.
-> 
+**Definition (Information Blockage).** A state in which observed actions are uninformative about artifact validity: the mutual information between the action sequence (a₁, …, a_n) and the true state ω approaches zero, even as throughput remains high.
 
 The cascade is absorbing. This is the technical term for what it feels like to watch a document you know is wrong get approved by three layers of review because no one had time to read it.
+
+This information blockage mechanism connects to foundational work on adverse selection under quality uncertainty (Akerlof, 1970): when verification costs make quality unobservable, low-quality artifacts can drive out high-quality ones through a forwarding dynamic rather than a pricing dynamic.
 
 ---
 
@@ -353,19 +317,13 @@ Let:
 - v ∈ [0,1] be the effective verification rate.
 - R be remediation cost (rework, incident response, rollback, downstream correction).
 
-> **Definition (Net Verified Output).** Net Verified Output ≔ Y · v − R
-> 
+**Definition (Net Verified Output).** Net Verified Output ≔ Y · v − R
 
-> 
-> 
-
-> **Definition (Synthetic Productivity).** Δ ≔ Y − (Y · v − R)
-> 
+**Definition (Synthetic Productivity).** Δ ≔ Y − (Y · v − R)
 
 Under verification reversal, Y can grow independently of verified value creation.
 
-> **Claim 1 (Synthetic Productivity).** Under volume–value decoupling, measured TFP rises while verification-adjusted TFP stagnates or declines.
-> 
+**Claim 1 (Synthetic Productivity).** Under volume–value decoupling, measured TFP rises while verification-adjusted TFP stagnates or declines.
 
 ---
 
@@ -387,8 +345,7 @@ OLS bias is driven by the correlation term, not by variance share alone:
 
 ### 6.1 Endogeneity Share (Exposure)
 
-> **Definition (Endogeneity Share).** α_t = Var(X_m,t) / Var(X_t)
-> 
+**Definition (Endogeneity Share).** α_t = Var(X_m,t) / Var(X_t)
 
 α_t measures **exposure**: how much of the substrate is model-mediated. It is not itself bias.
 
@@ -436,7 +393,7 @@ E[F_t^{model} | E_t > μ] < E_t (downward bias when true earnings are high)
 
 The model compresses toward μ, reducing variance but introducing systematic directional error.
 
-**Numerical illustration.** Let σ² = 1 (true earnings variance), τ² = 0.25 (human forecast noise), and suppose model forecasts exhibit compression bias:
+**Numerical illustration.** Let σ² = 1 (true earnings variance), τ² = 0.25 (human forecast noise), and suppose model forecasts exhibit compression bias (a directional error pattern consistent with optimization for acceptance rather than accuracy):
 
 F_t^{model} = 0.7 · E_t + 0.3 · μ + ν_t
 
@@ -466,8 +423,7 @@ This is non-negligible bias arising purely from substrate contamination, even th
 
 Let τ be expected time-to-detection of genuine misalignment between model-mediated measurement and reality.
 
-> **Claim 2 (Recognition Lag Extension).** Holding true degradation fixed, increasing α_t can increase τ when model-mediated substrates suppress residual visibility or reduce the probability of collecting independent ground truth.
-> 
+**Claim 2 (Recognition Lag Extension).** Holding true degradation fixed, increasing α_t can increase τ when model-mediated substrates suppress residual visibility or reduce the probability of collecting independent ground truth.
 
 *Interpretation:* as the measurement apparatus becomes self-referential, problems take longer to surface and have more time to compound.
 
@@ -536,15 +492,13 @@ A reduced-form representation:
 
 v(Y, θ) = θ · g(Y/θ), g′(·) < 0
 
-> **Prediction 1 (Wedge Growth).** If dY_t/dt > 0 while dθ_t/dt ≤ 0, then d/dt(TFP_t^measured − TFP_t^actual) > 0.
-> 
+**Prediction 1 (Wedge Growth).** If dY_t/dt > 0 while dθ_t/dt ≤ 0, then d/dt(TFP_t^measured − TFP_t^actual) > 0.
 
 ### 7.2 Epistemic Debt as a Stock
 
 Let C_s(t) be complexity (or volume) of epistemically loaded artifacts and G_c(t) be cognitive grasp (a function of verification capacity θ_t and verification skill κ_t).
 
-> **Definition (Epistemic Debt).** D_e(T) = ∫₀^T (C_s(t) − G_c(t)) dt
-> 
+**Definition (Epistemic Debt).** D_e(T) = ∫₀^T (C_s(t) − G_c(t)) dt
 
 *Note:* Epistemic debt as defined here is a conceptual stock variable, not a directly measured quantity. C_s(t) can be approximated by artifact volume and integration complexity; G_c(t) cannot be directly observed but can be proxied by learning outputs (post-mortem closure rates, incident recurrence, process adaptation). The integral formulation is a modeling device, not a measurement claim.
 
@@ -576,8 +530,7 @@ Both mechanisms are structurally weakened when verification reversal holds, beca
 
 Effective verification requires an independent rejection signal.
 
-> **Definition (Independent Rejection Signal).** A verification procedure V provides an independent rejection signal for generator G if, conditional on G’s surface features, V’s rejection event is not driven by those same features.
-> 
+**Definition (Independent Rejection Signal).** A verification procedure V provides an independent rejection signal for generator G if, conditional on G's surface features, V's rejection event is not driven by those same features.
 
 Cross-model error correlation (ρ) is a proxy for independence failure.
 
@@ -656,7 +609,7 @@ As T_s → ∞ (crises become rare), selection against verification intensifies 
 
 This result requires:
 
-1. **θ is latent (unpriced).** Markets cannot observe or price verification capacity pre-crisis. If θ were observable, investors could allocate to high-θ organizations and the selection dynamic would weaken or reverse.
+1. **θ is latent (unpriced).** Markets cannot observe or price verification capacity pre-crisis. If θ were observable, investors could allocate to high-θ organizations and the selection dynamic would weaken or reverse. This connects to Grossman and Stiglitz (1980): if acquiring information about θ is costly and the information cannot be captured privately, markets systematically underprice it, and the selection mechanism operates on observables (throughput) rather than fundamentals (verification stock).
 2. **No entry/exit.** Both types persist; no organization is selected out entirely. If Type H organizations exit during stable periods, the population loses high-verification capacity permanently.
 3. **Smooth dynamics.** No threshold effects or catastrophic transitions. If crises cause discontinuous elimination of Type L organizations, the dynamics change.
 4. **Exogenous crisis hazard.** The hazard rate h_t depends on aggregate epistemic leverage, not on individual firm behavior. If organizations could individually reduce crisis probability, private incentives might sustain verification.
@@ -1176,6 +1129,8 @@ The framework is provisional. The hypotheses are bets. The field will determine 
 
 ## References
 
+Akerlof, G. A. (1970). The market for "lemons": Quality uncertainty and the market mechanism. *The Quarterly Journal of Economics*, 84(3), 488–500.
+
 Banerjee, A. V. (1992). A simple model of herd behavior. *The Quarterly Journal of Economics*, 107(3), 797–817.
 
 Bikhchandani, S., Hirshleifer, D., & Welch, I. (1992). A theory of fads, fashion, custom, and cultural change as informational cascades. *Journal of Political Economy*, 100(5), 992–1026.
@@ -1183,6 +1138,8 @@ Bikhchandani, S., Hirshleifer, D., & Welch, I. (1992). A theory of fads, fashion
 Brynjolfsson, E., Li, D., & Raymond, L. R. (2023). Generative AI at work. *NBER Working Paper No. 31161*.
 
 GitClear (2024). *Coding on Copilot: 2023 Data Suggests Downward Pressure on Code Quality*. Technical Report. https://www.gitclear.com
+
+Grossman, S. J., & Stiglitz, J. E. (1980). On the impossibility of informationally efficient markets. *The American Economic Review*, 70(3), 393–408.
 
 International Energy Agency (2024). *Electricity 2024: Analysis and Forecast to 2026*. IEA, Paris. https://www.iea.org
 
@@ -1194,7 +1151,9 @@ Minsky, M. (1986). *The Society of Mind*. Simon & Schuster.
 
 Noy, S., & Zhang, W. (2023). Experimental evidence on the productivity effects of generative artificial intelligence. *Science*, 381(6654), 187–192.
 
-Pearce, H., Ahmad, B., Tan, B., Dolan-Gavitt, B., & Karri, R. (2022). Asleep at the keyboard? Assessing the security of GitHub Copilot’s code contributions. *2022 IEEE Symposium on Security and Privacy (SP)*, 754–768.
+Pearce, H., Ahmad, B., Tan, B., Dolan-Gavitt, B., & Karri, R. (2022). Asleep at the keyboard? Assessing the security of GitHub Copilot's code contributions. *2022 IEEE Symposium on Security and Privacy (SP)*, 754–768.
+
+Tetlock, P. E. (2005). *Expert Political Judgment: How Good Is It? How Can We Know?* Princeton University Press.
 
 Peng, S., Kalliamvakou, E., Cihon, P., & Demirer, M. (2023). The impact of AI on developer productivity: Evidence from GitHub Copilot. *arXiv preprint arXiv:2302.06590*.
 
