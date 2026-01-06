@@ -639,6 +639,8 @@ Theory without measurement is philosophy. This section operationalizes the frame
 
 This is deliberately minimal: it provides a concrete place to start measuring the wedge implied by synthetic productivity, and it directly connects to existing evidence on AI-assisted codebase quality shifts (GitClear, 2024).
 
+A direct proxy for epistemic debt accumulation: compare Time-to-Resolve (TTR) for defects in AI-assisted versus human-written code, controlling for defect severity. If epistemic debt compounds as predicted, TTR should increase disproportionately for AI-assisted code because maintainers lack the deep understanding required to diagnose and fix logic they did not produce.
+
 ### 9A. Direct Measurement of Verification Cost Non-Linearity
 
 The non-linearity assumption (α > 1 in C_v(Y) = c_0Y + c_1Y^α) is central to the framework. This section proposes a measurement protocol to test it.
@@ -999,6 +1001,8 @@ This framework applies when verification costs exceed production costs for a sub
 
 The computational substrate also imposes physical constraints. Data center electricity consumption is projected to double by 2026 (IEA, 2024), suggesting synthetic productivity may face resource limits independent of verification dynamics.
 
+The framework's predictions bind most strongly where failure costs are high or externalized, feedback loops are slow or noisy, and remediation requires human comprehension. In domains where failure is cheap, feedback is fast, and remediation is automated—consumer-facing feature iteration with instant rollback, for instance—verification reversal may represent efficient resource allocation rather than institutional pathology. The boundary between these regimes is itself an empirical question.
+
 ---
 
 ## 11. Falsification Conditions and Boundary Cases
@@ -1099,7 +1103,7 @@ The argument of this paper is simple to state and difficult to escape.
 
 When producing an artifact becomes cheaper than verifying it, rational agents stop verifying. This is not a moral failure; it is an equilibrium. The agents are optimizing correctly given the cost structure they face. The pathology is structural.
 
-From this single asymmetry, a cascade of consequences follows. Information stops aggregating. Measurement systems become self-referential. Market selection favors strategies that will fail under stress. Organizations that invest in verification are outcompeted by organizations that invest in throughput. The dashboard stays green while the balance sheet deteriorates.
+From this single asymmetry, a cascade of consequences follows. Information stops aggregating. Measurement systems become self-referential. Market selection favors strategies that will fail under stress. Organizations that invest in verification are outcompeted by organizations that invest in throughput.
 
 None of this requires malice. None of this requires stupidity. The mechanism operates on rational actors making locally optimal decisions. That is what makes it difficult to reverse: there is no villain to remove, no error to correct. The error is the cost structure itself.
 
@@ -1119,11 +1123,9 @@ Reality is not free. The bill comes due. The only question is whether we see it 
 
 ## Acknowledgments
 
-The "Double Minsky" framework in this paper owes a debt to both Marvin Minsky and Hyman Minsky. The parallel was first noticed—as many things are—in conversation with a cat named Marvin, who has since supervised most of my thinking about resilience, redundancy, and the limits of pattern completion.
+The "Double Minsky" framework in this paper owes a debt to Marvin Minsky and Hyman Minsky. The parallel was first noticed, as many things are, in conversation with a cat named Marvin, who has since supervised most of my thinking about resilience, redundancy, and the limits of pattern completion. To be precise, credit belongs to three individual Minskys and two Marvins. To both Marvin Minskys (feline and human), thank you.
 
-I do not have institutional affiliations to acknowledge or grant funding to disclose. This is independent work, produced in the interstices of consulting projects and job applications. The usual support structures were not available; the usual constraints did not apply. I am not certain whether this made the work better or worse, only that it made it mine.
-
-The framework is provisional. The hypotheses are bets. The field will determine whether they pay off. I have tried to be honest about what I know and what I am guessing. The distinction is not always clear from inside.
+I have no institutional affiliations or grant funding to disclose. This is independent work, unconnected to other projects, reconciling grad school nostalgia with the realization that I can still research; it's just not due by midnight. This framework is provisional. These hypotheses are bets. I've tried to be clear about what I know and what I'm inferring; it’s not always clear on the inside.
 
 ---
 
