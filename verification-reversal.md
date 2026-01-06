@@ -52,9 +52,9 @@ Measurement systems encode assumptions about what they measure. One assumption s
 
 Generative AI has severed that link.
 
-This paper is an attempt to build a measurement frame for a phenomenon that is still becoming visible. That is an uncomfortable position. The standard move would be to wait—let the data accumulate, let consensus form, then publish the retrospective analysis that confirms what everyone already suspected. But verification reversal, if it is real, degrades the very mechanisms that would eventually surface it. The recognition lag is part of the phenomenon.
+This paper is an attempt to build a measurement frame for a phenomenon that is still becoming visible. That is an uncomfortable position. The standard move would be to wait: let the data accumulate, let consensus form, then publish the retrospective analysis that confirms what everyone already suspected. But verification reversal, if it is real, degrades the very mechanisms that would eventually surface it. The recognition lag is part of the phenomenon.
 
-So this is provisional. The formal sections will look like theory; the empirical sections will look like a research agenda. The honest framing is that this is a bet—a structured bet, with falsifiable predictions, but a bet nonetheless. I am trying to describe a regime shift while standing inside it, which means I cannot be certain I am not simply pattern-matching on noise. The alternative—waiting for certainty—is not available if the argument is correct.
+So this is provisional. The formal sections will look like theory; the empirical sections will look like a research agenda. The honest framing is that this is a bet (a structured bet, with falsifiable predictions, but a bet nonetheless). I am trying to describe a regime shift while standing inside it, which means I cannot be certain I am not simply pattern-matching on noise. The alternative-waiting for certainty-is not available if the argument is correct.
 
 The marginal cost of *producing* a plausible artifact (code, analysis, report, forecast) has collapsed. The marginal cost of *verifying* whether that artifact is correct, reality-tracking, and safe to act on has not. In many domains it has risen, because the artifacts now require scrutiny they once did not, and the people capable of providing that scrutiny are being asked to do it at scale.
 
@@ -141,7 +141,7 @@ This paper occupies a middle ground between formal theory and measurement design
 
 Three domains exhibit verification reversal dynamics with measurable consequences.
 
-**Software development under AI assistance.** GitClear’s analysis of 153 million changed lines of code across 2020–2024 documents systematic quality shifts as AI code-generation tools scaled. Their 2024 report finds that short-horizon churn (lines reverted within two weeks of being written) increased substantially as AI-assisted commits grew, while “moved” code (a proxy for thoughtful refactoring) declined relative to copy/paste behavior (GitClear, 2024).
+**Software development under AI assistance.** GitClear's analysis of 153 million changed lines of code across 2020–2024 documents systematic quality shifts as AI code-generation tools scaled. Their 2024 report finds that short-horizon churn (lines reverted within two weeks of being written) increased substantially as AI-assisted commits grew, while "moved" code (a proxy for thoughtful refactoring) declined relative to copy/paste behavior (GitClear, 2024).
 
 **Security vulnerability proliferation.** Multiple studies document elevated vulnerability rates in AI-generated code, with common weakness enumerations (CWEs) such as SQL injection, XSS, and hardcoded credentials appearing at higher frequencies than in human-written baselines (Pearce et al., 2022). These results are consistent with a verification-reversal mechanism: generation scales cheaply, while deep security review (threat modeling, misuse-case analysis, integration testing) does not.
 
@@ -254,11 +254,27 @@ The verification cost function C_v(Y) is central to this framework, yet direct m
 - **Verification depth:** Is the reviewer checking surface features (syntax, formatting, obvious errors) or deep properties (logic correctness, security implications, integration effects)?
 - **Fatigue dynamics:** How does verification quality degrade across a review session? Across a week? Across exposure to thousands of similar artifacts?
 
-**Implication for this framework.** The non-linearity in C_v(Y)—specifically the fatigue term c₁Y^α with α > 1—is theoretically motivated but empirically underdetermined. The framework predicts that verification cost per artifact rises with volume; falsifying this prediction requires direct measurement of verification effort, not just outcomes.
+**Implication for this framework.** The non-linearity in C_v(Y) (specifically the fatigue term c₁Y^α with α > 1) is theoretically motivated but empirically underdetermined. The framework predicts that verification cost per artifact rises with volume; falsifying this prediction requires direct measurement of verification effort, not just outcomes.
 
 **A feasible measurement approach.** Time-tracking at the artifact level (review duration per PR, per document, per forecast) combined with quality tagging (substantive comments vs. rubber-stamp approvals) can approximate verification intensity. Eye-tracking and cognitive load measures exist in laboratory settings but are difficult to deploy at organizational scale.
 
 This measurement gap is a limitation of the current literature, not a weakness specific to this framework. Addressing it is part of the empirical agenda proposed in Section 9.
+
+### 3.3.1 The Non-Linearity Assumption
+
+The cost function C_v(Y) = c₀Y + c₁Y^α + c₂f(Y/H) is theoretically central to this framework. Yet the non-linearity (specifically whether fatigue effects with α > 1 dominate specialization and tooling gains) remains empirically underdetermined.
+
+This is not a weakness we are hiding. It is an assumption doing explicit load-bearing work.
+
+We proceed assuming α > 1 as a working hypothesis, grounded in qualitative accounts of review queue dynamics and documented quality degradation under AI-assisted scaling (GitClear, 2024), but not yet directly validated. The assumption is plausible: cognitive fatigue compounds across review sessions, needle-in-haystack dynamics worsen as artifact volume grows, and tooling gains face diminishing returns when the binding constraint is human attention rather than mechanical throughput.
+
+But plausibility is not proof.
+
+**What the assumption requires:** Direct measurement of whether log(review_time) ~ α·log(volume) exhibits α > 1 across organizational contexts. If α ≤ 1 (if specialization and tooling gains outpace fatigue effects), then the cost structure may not reverse at organizational scale, and cascade formation becomes contingent on other factors (incentive misalignment, principal-agent dynamics) rather than rational response to cost structure.
+
+**Falsification condition (F1):** Regress log(review_time_per_artifact) on log(artifact_volume) within organizations. If slope ≤ 1, the non-linearity does not bind as described.
+
+Until this test is run, the framework rests on a contestable premise about cost structure. This is its primary empirical vulnerability, and we are naming it explicitly rather than obscuring it in notation.
 
 ---
 
@@ -455,6 +471,51 @@ Let τ be expected time-to-detection of genuine misalignment between model-media
 
 *Interpretation:* as the measurement apparatus becomes self-referential, problems take longer to surface and have more time to compound.
 
+### 6.4 Two Lag Mechanisms: Detection vs. Occurrence
+
+Claim 2 asserts that recognition lags extend as model-mediated substrate share (α_t) rises. This claim conflates two distinct mechanisms that require separation.
+
+**Definition (Detection Lag).** Let τ_d be the expected time from problem occurrence to problem detection, holding occurrence rate constant.
+
+**Definition (Occurrence Lag).** Let τ_o be the expected time from initial condition to problem occurrence, holding detection capacity constant.
+
+These are not the same. Detection lag is a *measurement* problem: the underlying degradation rate is unchanged, but we find problems slower because diagnostic tools are contaminated. Occurrence lag is a *dynamics* problem: problems emerge more slowly initially (because contaminated models smooth tails and suppress variance), but compound faster and erupt at larger scale when they finally manifest.
+
+**Drivers of each mechanism:**
+
+Detection lag (τ_d) increases when:
+
+- α_t rises (more substrate is model-mediated)
+- Diagnostic tools rely on the contaminated substrate
+- Independent ground-truth collection declines
+
+Occurrence lag (τ_o) increases when:
+
+- Model outputs compress toward consensus (tail suppression)
+- Variance in measured outcomes declines
+- Early warning signals are smoothed away
+
+**Different empirical predictions:**
+
+| Mechanism | Prediction | Observable |
+| --- | --- | --- |
+| Detection lag | Fixed underlying error rate, slower discovery | Time-to-detection for seeded defects increases with α_t |
+| Occurrence lag | Lower observed error rate initially, larger eventual failures | Variance in outcomes declines, then tail events increase in severity |
+
+**Clarification of Claim 2:**
+
+Claim 2 as stated (that increasing α_t can increase τ, or recognition lag) is a claim about *detection lag*. It asserts that model-mediated substrates suppress residual visibility and reduce the probability of collecting independent ground truth.
+
+The occurrence lag mechanism is a separate, complementary claim: that tail suppression in model outputs delays problem manifestation while allowing underlying fragility to compound. Testing this requires tracking not just time-to-detection but the *severity distribution* of detected problems over time.
+
+**Joint prediction:** If both mechanisms operate, we should observe:
+
+1. Declining variance in routine metrics (occurrence lag)
+2. Increasing time-to-detection for known anomalies (detection lag)
+3. Increasing severity of detected problems when they finally surface (compounding)
+
+This is testable. Track variance, detection latency, and severity jointly. If variance declines and detection latency increases but severity remains constant, only detection lag operates. If severity increases as variance declines, both mechanisms operate.
+
 ---
 
 ## 7. Verification-Adjusted Productivity and the Verification Treadmill
@@ -485,7 +546,9 @@ Let C_s(t) be complexity (or volume) of epistemically loaded artifacts and G_c(t
 > **Definition (Epistemic Debt).** D_e(T) = ∫₀^T (C_s(t) − G_c(t)) dt
 > 
 
-Debt is a useful metaphor because it implies a creditor. The creditor, in this case, is reality. It does not negotiate.
+*Note:* Epistemic debt as defined here is a conceptual stock variable, not a directly measured quantity. C_s(t) can be approximated by artifact volume and integration complexity; G_c(t) cannot be directly observed but can be proxied by learning outputs (post-mortem closure rates, incident recurrence, process adaptation). The integral formulation is a modeling device, not a measurement claim.
+
+The metaphor is useful precisely because debt implies a creditor. The creditor, in this case, is reality. It does not negotiate.
 
 ### 7.3 Synthetic Productivity as a Drawdown of Epistemic Capital
 
@@ -526,58 +589,86 @@ I did not set out to name a framework after two people named Minsky. The paralle
 
 ### 8.3 Market Selection on Lagging Indicators
 
-Let observable performance be π_t and let latent verification stock be θ_t. During stable periods, markets allocate resources based on π because θ is unobservable.
+The intuition is straightforward: if markets allocate resources based on observable throughput (π) rather than latent verification stock (θ), then low-verification strategies will be systematically favored during stable periods. This section formalizes that intuition.
 
-**Model Setup.** Consider a population of organizations indexed by type τ ∈ {H, L}:
+**Model Setup**
+
+Consider a population of organizations indexed by type τ ∈ {H, L}:
 
 - **Type H (high verification):** Chooses (Y_H, θ_H) with Y_H < Y_L and θ_H > θ_L
 - **Type L (low verification):** Chooses (Y_L, θ_L) with Y_L > Y_H and θ_L < θ_H
 
-Let market share of Type H at time t be m_t ∈ [0,1].
+Let m_t ∈ [0,1] denote the market share of Type H at time t.
 
-**Payoff Structure.** In stable periods (no crisis), observable performance determines resource allocation:
+**Payoff Structure**
+
+In stable periods (no crisis), observable performance determines resource allocation:
 
 π_τ = f(Y_τ) where f′ > 0
 
-Type L dominates on π during stable periods: π_L > π_H.
+Type L dominates on observable performance during stable periods: π_L > π_H.
 
 Crises arrive stochastically with hazard rate:
 
-h_t = h₀ · g(D_e,t / θ_t)
+h_t = h_0 · g(D_{e,t} / θ_t)
 
-where g′ > 0, so crisis probability increases with epistemic leverage (debt-to-verification ratio). In crisis, Type τ suffers loss:
+where g′ > 0, so crisis probability increases with epistemic leverage (debt-to-verification ratio).
 
-L_τ = L₀ / θ_τ
+In crisis, Type τ suffers loss:
+
+L_τ = L_0 / θ_τ
 
 with L_H < L_L because higher verification stock buffers against crisis losses.
 
-**Market Share Dynamics.** Let selection pressure during stable periods be:
+**Market Share Dynamics**
 
-dm_t/dt|_{stable} = −s · (π_L − π_H) · m_t · (1 − m_t)
+During stable periods:
 
-where s > 0 is selection intensity. During crisis:
+dm_t/dt |_{stable} = −s · (π_L − π_H) · m_t · (1 − m_t)
 
-dm_t/dt|_{crisis} = +c · (L_L − L_H) · m_t · (1 − m_t)
+where s > 0 is selection intensity. Type H loses share because it is outperformed on observable metrics.
 
-where c > 0 is crisis-induced reallocation intensity.
+During crisis:
 
-**Proposition 2 (Selection Against Verification).** Let T_s be expected time between crises and T_c be crisis duration. If:
+dm_t/dt |_{crisis} = +c · (L_L − L_H) · m_t · (1 − m_t)
+
+where c > 0 is crisis-induced reallocation intensity. Type H gains share because it suffers lower losses.
+
+**Proposition 2 (Selection Against Verification)**
+
+Let T_s be expected duration of stable periods and T_c be expected duration of crises. Over a complete cycle of length T_s + T_c:
+
+E[Δm] = m(1−m) · [−s(π_L − π_H) · T_s + c(L_L − L_H) · T_c]
+
+If:
 
 s · (π_L − π_H) · T_s > c · (L_L − L_H) · T_c
 
-then E[dm_t/dt] < 0: market share of high-verification organizations declines in expectation.
+then E[Δm] < 0: market share of high-verification organizations declines in expectation.
 
-*Proof.* Over a cycle of length T_s + T_c:
+*Proof.* The expected change in market share is the time-weighted sum of selection effects. During stable periods, Type H loses share at rate s(π_L − π_H). During crises, Type H gains share at rate c(L_L − L_H). The net effect depends on the duration-weighted comparison. When stable periods dominate expected duration (T_s >> T_c), the stable-period selection effect dominates. ∎
 
-E[Δm] = −s(π_L − π_H) · m(1−m) · T_s + c(L_L − L_H) · m(1−m) · T_c
+**Corollary (Crisis Scarcity Amplifies Selection)**
 
-The condition s(π_L − π_H)T_s > c(L_L − L_H)T_c implies E[Δm] < 0. ∎
+As T_s → ∞ (crises become rare), selection against verification intensifies regardless of crisis severity.
 
-**Corollary (Crisis Scarcity Amplifies Selection).** As T_s → ∞ (crises become rare), selection against verification intensifies regardless of crisis severity.
+**Critical Assumptions**
 
-*Interpretation.* The selection mechanism is not a market failure in the traditional sense—agents optimize correctly given observable information. The failure is structural: the payoff-relevant variable (θ) is latent and only revealed at forcing events, while the selection-relevant variable (π) favors low-verification strategies during the intervals that dominate expected duration.
+This result requires:
 
-**Scope conditions.** This result requires: (i) θ is not priced pre-crisis (no insurance market, no credible disclosure); (ii) crises are sufficiently rare relative to competitive pressure; (iii) crisis losses are not catastrophic enough to eliminate Type L entirely. When any condition fails, the selection dynamic weakens.
+1. **θ is latent (unpriced).** Markets cannot observe or price verification capacity pre-crisis. If θ were observable, investors could allocate to high-θ organizations and the selection dynamic would weaken or reverse.
+2. **No entry/exit.** Both types persist; no organization is selected out entirely. If Type H organizations exit during stable periods, the population loses high-verification capacity permanently.
+3. **Smooth dynamics.** No threshold effects or catastrophic transitions. If crises cause discontinuous elimination of Type L organizations, the dynamics change.
+4. **Exogenous crisis hazard.** The hazard rate h_t depends on aggregate epistemic leverage, not on individual firm behavior. If organizations could individually reduce crisis probability, private incentives might sustain verification.
+
+**Boundary Cases Where Selection Weakens**
+
+- **Observable θ:** If verification capacity can be audited, certified, or credibly disclosed, markets can price it pre-crisis. Then selection operates on θ directly, not just π.
+- **Frequent crises:** If T_c is large relative to T_s, crisis-period selection dominates and high-verification strategies are favored.
+- **Catastrophic crisis losses:** If L_L is large enough to eliminate Type L organizations entirely during crises, high-verification types survive by default.
+- **Organizational learning:** If Type L organizations can rapidly increase θ when crisis becomes visible, they can mimic Type H during crises and avoid selection.
+
+*Interpretation.* The selection mechanism is not a market failure in the traditional sense—agents optimize correctly given observable information. The failure is structural: the payoff-relevant variable (θ) is latent, and the selection-relevant variable (π) favors low-verification strategies during the intervals that dominate expected duration.
 
 ---
 
@@ -594,6 +685,61 @@ Theory without measurement is philosophy. This section operationalizes the frame
 - **R (remediation):** churn/reverts, bug-fix PR share, rollback commits, incident-linked fixes.
 
 This is deliberately minimal: it provides a concrete place to start measuring the wedge implied by synthetic productivity, and it directly connects to existing evidence on AI-assisted codebase quality shifts (GitClear, 2024).
+
+### 9A. Direct Measurement of Verification Cost Non-Linearity
+
+The non-linearity assumption (α > 1 in C_v(Y) = c_0Y + c_1Y^α) is central to the framework. This section proposes a measurement protocol to test it.
+
+**Hypothesis:** Verification cost per artifact is super-linear in artifact volume: α > 1.
+
+**Direct Test: Review Time Scaling**
+
+*Method:* Within a set of repositories with comparable complexity, regress log(mean_review_time) on log(PR_volume) across time periods.
+
+*Model:* log(T_review) = β_0 + α · log(Y) + ε
+
+*Prediction:* α > 1 (super-linear scaling)
+
+*Falsification:* α ≤ 1 (linear or sub-linear scaling)
+
+*Data source:* GitHub API (PR timestamps, review comments, approval times); internal DevOps logs.
+
+*Controls:* PR complexity (lines changed, files touched); reviewer experience; repository characteristics.
+
+**Indirect Test: Seeded Defect Detection Probability**
+
+*Method:* Inject known defects at controlled rates into codebases with varying PR volume. Measure detection probability as a function of volume.
+
+*Model:* P(detect) = f(Y, defect_type)
+
+*Prediction:* P(detect) declines with Y (needle-in-haystack effect)
+
+*Falsification:* P(detect) is constant or increasing in Y
+
+*Data source:* Controlled experiment with synthetic bugs.
+
+**Indirect Test: Reviewer Fatigue**
+
+*Method:* Track review quality (substantive comments, requested changes, revision cycles) as a function of position in reviewer's daily queue.
+
+*Model:* Quality_i = g(position_i, total_volume)
+
+*Prediction:* Quality declines with queue position and total volume
+
+*Falsification:* Quality is independent of position and volume
+
+*Data source:* Reviewer activity logs with timestamps.
+
+**Limitations:**
+
+1. Review time is a proxy for cognitive cost; actual effort is not observed.
+2. Seeded defects are artificial; real defect detection may differ.
+3. Fatigue effects may be confounded with time-of-day effects.
+4. Sample is limited to software development; generalization to other domains requires separate testing.
+
+**Interpretation:**
+
+If all three tests support α > 1, the non-linearity assumption is empirically grounded for software domains. If tests are mixed or fail, the cost structure may not reverse at organizational scale, and the cascade mechanism requires alternative drivers (e.g., incentive misalignment rather than cost asymmetry).
 
 ### Testable Predictions (Summary)
 
@@ -847,7 +993,7 @@ I cannot rule out the second possibility from inside the frame. This is not fals
 
 What I can do is specify conditions under which the framework fails, and commit to those conditions as falsification criteria. Section 9 attempts this. The hypotheses are genuine bets: if verification intensity remains stable or improves as artifact volume grows, the core cost asymmetry does not bind. If cascade fragility does not increase with coupling, the propagation mechanism is not as described. If seeded defects are caught at stable rates regardless of volume, verification capacity is not the binding constraint.
 
-The uncomfortable possibility—the one I keep returning to—is that the framework might be approximately correct and still useless. If verification reversal is a stable attractor rather than a transitional disequilibrium, then knowing about it changes nothing. You cannot outspend an architectural asymmetry. The policy response becomes "accept degraded epistemic conditions and build systems that don't depend on verification being abundant," which is less a solution than a managed decline.
+The uncomfortable possibility (the one I keep returning to) is that the framework might be approximately correct and still useless. If verification reversal is a stable attractor rather than a transitional disequilibrium, then knowing about it changes nothing. You cannot outspend an architectural asymmetry. The policy response becomes "accept degraded epistemic conditions and build systems that don't depend on verification being abundant," which is less a solution than a managed decline.
 
 I do not know which world we are in. The paper is an attempt to find out.
 
@@ -865,7 +1011,11 @@ Heterogeneity in models, training distributions, and verification methods reduce
 
 ### 10.4 Adversarial Dynamics: Verification Reversal as Attack Surface
 
-Verification reversal does not merely create inefficiency—it creates exploitable structure. When verification is the binding constraint, adversaries can optimize against it.
+The cascade equilibrium and synthetic productivity mechanisms described in Sections 4–7 do not require adversarial actors. They emerge from decentralized optimization against cost structures. This section describes a *distinct* mechanism: how verification reversal creates exploitable structure for sophisticated adversaries.
+
+The connection is enabling, not causal. Verification reversal lowers the cost of successful artifact injection by reducing detection probability. An adversary who would have been caught under high-verification regimes can now succeed simply because the verification bandwidth is exhausted on routine throughput. The attack surface exists because the defense is structurally weakened.
+
+Verification reversal does not merely create inefficiency. It creates exploitable structure. When verification is the binding constraint, adversaries can optimize against it.
 
 **The attack geometry.** An adversary seeking to inject malicious or misleading artifacts faces two challenges: (i) producing artifacts that appear legitimate, and (ii) surviving the verification process. Under verification reversal, the second constraint relaxes dramatically.
 
@@ -886,7 +1036,7 @@ dp_detect/dt < 0 when dθ/dt < 0 and d(artifact_volume)/dt > 0
 
 **Structural asymmetry.** Defenders must verify everything; attackers need only one success. Verification reversal amplifies this asymmetry by reducing the defenders' per-artifact verification budget while leaving the attackers' generation capacity unconstrained.
 
-**Security implications.** Maintaining diverse verification channels—humans with different expertise, models with distinct training distributions, formal methods where applicable, red-team processes with adversarial mandates—is not optional resilience. It is a security control.
+**Security implications.** Maintaining diverse verification channels (humans with different expertise, models with distinct training distributions, formal methods where applicable, red-team processes with adversarial mandates) is not optional resilience. It is a security control.
 
 The adversarial framing also suggests that verification reversal may be actively accelerated by sophisticated actors who benefit from reduced verification intensity. This is not a claim about current AI development, but a structural observation: any actor who profits from unverified propagation has an incentive to increase artifact volume relative to verification capacity.
 
@@ -894,11 +1044,103 @@ The adversarial framing also suggests that verification reversal may be actively
 
 This framework applies when verification costs exceed production costs for a substantial class of artifacts. It is limited in domains with tight formal contracts, high-coverage automated tests, low-volume high-stakes decisions with enforced audit gates, or fast and unambiguous feedback loops.
 
-The computational substrate also imposes physical constraints—data center electricity consumption is projected to double by 2026 (IEA, 2024)—suggesting synthetic productivity may face resource limits independent of verification dynamics.
+The computational substrate also imposes physical constraints. Data center electricity consumption is projected to double by 2026 (IEA, 2024), suggesting synthetic productivity may face resource limits independent of verification dynamics.
 
 ---
 
-## 11. Conclusion
+## 11. Falsification Conditions and Boundary Cases
+
+This section consolidates the conditions under which the framework would be falsified, the tests that would establish each condition, and the boundary cases where predictions weaken.
+
+**F1. Cost Asymmetry (Verification Reversal Regime)**
+
+*Core claim:* ∂C_p/∂Y < ∂C_v/∂Y for the artifact classes specified in Section 3.0.
+
+*Falsification:* Verification cost per artifact declines faster than production cost per artifact as volume scales. Specifically: α ≤ 1 in the cost function C_v(Y) = c_0Y + c_1Y^α.
+
+*Test:* Regress log(review_time) on log(artifact_volume) within organizations. If coefficient ≤ 1, non-linearity does not bind.
+
+*Data source:* GitHub PR review times; internal code review logs with timestamps.
+
+*Limitation:* Review time is a proxy for cost; cognitive effort is not directly observed.
+
+**F2. Cascade Formation (Proposition 1)**
+
+*Core claim:* When C_v − C_f ≥ B_net, agents forward regardless of private beliefs, producing information blockage.
+
+*Falsification:* Agents continue to verify at stable rates even as (C_v − C_f) / B_net increases. Forwarding behavior is independent of cost structure.
+
+*Test:* Track verification intensity (review depth, revision cycles) as a function of artifact volume and time pressure. If verification intensity remains stable under high-volume conditions, the cost threshold is not binding.
+
+*Data source:* PR review metadata; code review quality scores; audit coverage rates.
+
+**F3. Synthetic Productivity (Claim 1)**
+
+*Core claim:* Measured TFP diverges from verification-adjusted TFP as verification intensity declines.
+
+*Falsification:* Correction burden (R) grows slower than or equal to throughput gains, and verification intensity remains stable.
+
+*Test:* Compute wedge Δ = Y − (Y · v − R) over time. If Δ is stable or declining, synthetic productivity is not accumulating.
+
+*Data source:* Throughput metrics (commits, tickets closed); remediation metrics (churn, reverts, incident response hours).
+
+**F4. Recognition Lag Extension (Claim 2)**
+
+*Core claim:* Increasing α_t (model-mediated substrate share) extends τ_d (detection lag).
+
+*Falsification:* Detection latency for seeded defects remains constant as α_t rises.
+
+*Test:* Inject known anomalies at varying α_t levels; measure time-to-detection. If τ_d is independent of α_t, substrate contamination does not affect detection.
+
+*Data source:* Controlled experiments with seeded defects; incident detection timelines.
+
+**F5. Market Selection (Proposition 2)**
+
+*Core claim:* Low-verification organizations gain market share during stable periods.
+
+*Falsification:* High-verification organizations maintain or increase share during stable periods, or low-verification organizations are systematically eliminated before crises.
+
+*Test:* Track verification proxies (audit coverage, review depth) against market share or resource allocation. If high-θ proxies predict share gains in stable periods, selection dynamics are reversed.
+
+*Data source:* Industry surveys; public company filings with quality metrics; startup failure rates by verification posture.
+
+**F6. Verification Capacity Erosion (H5)**
+
+*Core claim:* dθ_t/dt ≤ 0 and dκ_t/dt < 0 (capacity and capability decline under sustained underuse).
+
+*Falsification:* Verification capacity and capability remain stable or improve despite reduced utilization.
+
+*Test:* Track seeded defect detection rates over time. If detection rates remain stable even as review volume declines, capability is not eroding.
+
+*Data source:* Controlled seeded-defect experiments; reviewer performance metrics.
+
+**Boundary Cases Where Predictions Weaken**
+
+The framework's predictions weaken or fail under the following conditions:
+
+1. **Tight formal contracts.** When artifacts have unambiguous correctness criteria (types, proofs, model checking), automated verification can scale with production. The cost asymmetry does not bind.
+2. **High-coverage automated tests.** When fast, comprehensive test suites provide immediate ground-truth feedback, verification cost may scale linearly or sub-linearly with output.
+3. **Observable verification stock (θ).** If verification capacity can be audited, certified, or credibly disclosed, markets can price it pre-crisis and selection against verification weakens.
+4. **Frequent crises.** If crises arrive frequently relative to stable periods (T_c large relative to T_s), crisis-period selection dominates and high-verification strategies are favored.
+5. **Organizational learning.** If organizations can rapidly increase verification capacity when problems become visible, the cascade equilibrium is not absorbing.
+6. **Resource constraints on generation.** If production costs rise (energy, compute, regulatory barriers), the cost asymmetry may reverse and verification becomes the cheaper margin.
+
+**Joint Prediction**
+
+If the framework is correct, we should observe the following pattern over time:
+
+1. Throughput (Y) rises faster than verification intensity (v)
+2. Correction burden (R) rises, but with lag
+3. Detection latency (τ_d) increases as substrate share (α_t) rises
+4. Variance in routine metrics declines (occurrence lag)
+5. Severity of detected problems increases (compounding)
+6. Market share shifts toward low-verification organizations during stable periods
+
+If three or more of these predictions fail simultaneously, the framework's core mechanism is not operating as described.
+
+---
+
+## 12. Conclusion
 
 The argument of this paper is simple to state and difficult to escape.
 
@@ -924,9 +1166,9 @@ Reality is not free. The bill comes due. The only question is whether we see it 
 
 ## Acknowledgments
 
-The “Double Minsky” framework in this paper owes an obvious debt to both Marvin Minsky and Hyman Minsky. The parallel was first noticed (as many things are) in conversation with a cat named Marvin.
+The "Double Minsky" framework in this paper owes a debt to both Marvin Minsky and Hyman Minsky. The parallel was first noticed—as many things are—in conversation with a cat named Marvin, who has since supervised most of my thinking about resilience, redundancy, and the limits of pattern completion.
 
-I do not have institutional affiliations to acknowledge or grant funding to disclose. This is independent work, produced in the interstices of consulting projects and job applications. The usual support structures were not available; the usual constraints did not apply. I am not sure whether this made the work better or worse, only that it made it mine.
+I do not have institutional affiliations to acknowledge or grant funding to disclose. This is independent work, produced in the interstices of consulting projects and job applications. The usual support structures were not available; the usual constraints did not apply. I am not certain whether this made the work better or worse, only that it made it mine.
 
 The framework is provisional. The hypotheses are bets. The field will determine whether they pay off. I have tried to be honest about what I know and what I am guessing. The distinction is not always clear from inside.
 
