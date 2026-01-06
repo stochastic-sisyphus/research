@@ -1,4 +1,6 @@
-Cascades and Synthetic Productivity in an AI‑Mediated Economy
+# Verification Reversal
+
+## Cascades and Synthetic Productivity in an AI‑Mediated Economy
 
 **Vanessa Beck**
 
