@@ -12,7 +12,7 @@ Independent Researcher
 
 ORCID: 0009-0008-6611-535X
 
-DOI: 10.5281/zenodo.18159898
+DOI: 10.5281/zenodo.18159897
 
 GitHub: stochastic-sisyphus
 
