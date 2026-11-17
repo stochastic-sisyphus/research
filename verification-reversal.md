@@ -2,13 +2,17 @@
 
 ## Cascades and Synthetic Productivity in an AI‑Mediated Economy
 
+[DOI](https://doi.org/10.5281/zenodo.18159897)
+
 **Vanessa Beck**
+
+Masters of Science, ML Specialization, University of Illinois Chicago
 
 Independent Researcher
 
-[vanessa.beckk1@gmail.com](mailto:vanessa.beckk1@gmail.com)
-
 ORCID: 0009-0008-6611-535X
+
+DOI: 10.5281/zenodo.18159898
 
 GitHub: stochastic-sisyphus
 
@@ -22,15 +26,19 @@ Version 1.0 | January 2026
 
 Generative AI has inverted a relationship that economic measurement systems assumed was stable: the cost of producing an artifact now falls below the cost of verifying it. When verification becomes the binding constraint, rational agents stop checking and start forwarding.
 
-This paper formalizes **verification reversal** as a regime condition and derives its equilibrium consequences. In a sequential forwarding game, we show that when the cost gap between verification and forwarding exceeds the expected benefit of catching errors, a **cascade equilibrium** emerges: agents propagate artifacts regardless of private beliefs, and information aggregation fails even as throughput metrics soar (*Proposition 1*). We then show that market selection, operating on observable throughput rather than latent verification stocks, systematically favors low-verification strategies during stable periods—the very periods that dominate expected duration (*Proposition 2*).
+This paper formalizes **verification reversal** as a regime condition and derives its equilibrium consequences. In a sequential forwarding game, we show that when the cost gap between verification and forwarding exceeds the expected benefit of catching errors, a **cascade equilibrium** emerges: agents propagate artifacts regardless of private beliefs, and information aggregation fails even as throughput metrics soar (*Proposition 1*). We then show that market selection, operating on observable throughput rather than latent verification stocks, systematically favors low-verification strategies during stable periods, the very periods that dominate expected duration (*Proposition 2*).
 
-The resulting divergence between measured and verification-adjusted productivity constitutes **synthetic productivity**: conventional TFP rises while utility-relevant output stagnates, because verification effort and remediation burdens are omitted from the measurement frame. We formalize **epistemic debt** as a stock variable—the accumulated gap between system complexity and cognitive grasp—and show how it compounds when verification capacity erodes faster than artifact volume grows.
+The resulting divergence between measured and verification-adjusted productivity constitutes **synthetic productivity**: conventional TFP rises while utility-relevant output stagnates, because verification effort and remediation burdens are omitted from the measurement frame. We formalize **epistemic debt** as a stock variable, the accumulated gap between system complexity and cognitive grasp, and show how it compounds when verification capacity erodes faster than artifact volume grows.
 
 A distinct contamination channel compounds these dynamics. As model-generated content enters the substrates used for evaluation and decision-support, measurement systems become **endogenously self-referential**. We derive conditions under which this contamination introduces directional bias and extends recognition lags, allowing genuine degradation to persist undetected. The resulting verification bottleneck also creates an exploitable **attack surface**, enabling adversarial artifact injection at reduced detection cost.
 
-We examine two candidate self-correction mechanisms—recursive AI verification and market selection—and identify structural conditions under which both fail. Recursive verification lacks independent rejection signals when models share training distributions; market selection operates on lagging proxies that favor low-verification strategies until crises force revaluation.
+We examine two candidate self-correction mechanisms, recursive AI verification and market selection, and identify structural conditions under which both fail. Recursive verification lacks independent rejection signals when models share training distributions; market selection operates on lagging proxies that favor low-verification strategies until crises force revaluation.
 
 Finally, we propose an empirical agenda with instrumentation baselines, anchored by a GitHub pull-request testbed, to measure verification intensity, remediation burden, cascade fragility, substrate contamination, and the accumulation of epistemic debt. The framework yields eight testable hypotheses with explicit falsification conditions.
+
+**Cite this paper**
+
+Beck, V. (2026). *Verification Reversal: Cascades and Synthetic Productivity in an AI-Mediated Economy*. Zenodo. https://doi.org/10.5281/zenodo.18159898
 
 **Keywords:** Information cascades; Verification costs; Generative AI; Total factor productivity; Endogeneity; Epistemic debt; Adversarial robustness; Market selection.
 
@@ -621,7 +629,7 @@ This result requires:
 - **Catastrophic crisis losses:** If L_L is large enough to eliminate Type L organizations entirely during crises, high-verification types survive by default.
 - **Organizational learning:** If Type L organizations can rapidly increase θ when crisis becomes visible, they can mimic Type H during crises and avoid selection.
 
-*Interpretation.* The selection mechanism is not a market failure in the traditional sense—agents optimize correctly given observable information. The failure is structural: the payoff-relevant variable (θ) is latent, and the selection-relevant variable (π) favors low-verification strategies during the intervals that dominate expected duration.
+*Interpretation.* The selection mechanism is not a market failure in the traditional sense, agents optimize correctly given observable information. The failure is structural: the payoff-relevant variable (θ) is latent, and the selection-relevant variable (π) favors low-verification strategies during the intervals that dominate expected duration.
 
 ---
 
@@ -942,7 +950,7 @@ This is where AI-generated-code security findings become directly testable under
 
 Every measurement frame has blind spots. This one is no exception.
 
-The framework predicts that verification reversal creates cascade equilibria, synthetic productivity, and compounding epistemic debt. If correct, it explains a pattern of institutional fragility that would otherwise appear as a series of unrelated failures. If incorrect, it is an elaborate overfitting—a story imposed on noise, itself an artifact of the pattern-completion dynamics it claims to describe.
+The framework predicts that verification reversal creates cascade equilibria, synthetic productivity, and compounding epistemic debt. If correct, it explains a pattern of institutional fragility that would otherwise appear as a series of unrelated failures. If incorrect, it is an elaborate overfitting, a story imposed on noise, itself an artifact of the pattern-completion dynamics it claims to describe.
 
 I cannot rule out the second possibility from inside the frame. This is not false modesty; it is a structural limitation. The same mechanisms that would make verification reversal real would also make it difficult to detect, and would make confident detection claims suspicious. A framework that predicts its own undetectability is not thereby confirmed.
 
@@ -1001,7 +1009,7 @@ This framework applies when verification costs exceed production costs for a sub
 
 The computational substrate also imposes physical constraints. Data center electricity consumption is projected to double by 2026 (IEA, 2024), suggesting synthetic productivity may face resource limits independent of verification dynamics.
 
-The framework's predictions bind most strongly where failure costs are high or externalized, feedback loops are slow or noisy, and remediation requires human comprehension. In domains where failure is cheap, feedback is fast, and remediation is automated—consumer-facing feature iteration with instant rollback, for instance—verification reversal may represent efficient resource allocation rather than institutional pathology. The boundary between these regimes is itself an empirical question.
+The framework's predictions bind most strongly where failure costs are high or externalized, feedback loops are slow or noisy, and remediation requires human comprehension. In domains where failure is cheap, feedback is fast, and remediation is automated, consumer-facing feature iteration with instant rollback, for instance, verification reversal may represent efficient resource allocation rather than institutional pathology. The boundary between these regimes is itself an empirical question.
 
 ---
 
@@ -1107,9 +1115,9 @@ From this single asymmetry, a cascade of consequences follows. Information stops
 
 None of this requires malice. None of this requires stupidity. The mechanism operates on rational actors making locally optimal decisions. That is what makes it difficult to reverse: there is no villain to remove, no error to correct. The error is the cost structure itself.
 
-I have tried to be precise about what this framework does and does not claim. It does not claim that AI is bad, that productivity gains are illusory, or that all model-generated content is unreliable. It claims that a specific cost asymmetry—generation cheaper than verification—changes equilibrium behavior in ways that current measurement systems do not capture.
+I have tried to be precise about what this framework does and does not claim. It does not claim that AI is bad, that productivity gains are illusory, or that all model-generated content is unreliable. It claims that a specific cost asymmetry, generation cheaper than verification, changes equilibrium behavior in ways that current measurement systems do not capture.
 
-The empirical agenda is the honest part of this paper. I have specified conditions under which the framework would be falsified, and I have proposed instrumentation to test them. If verification intensity proves robust to volume increases, if cascade fragility does not scale with coupling, if recognition lags do not extend with substrate contamination—then the framework is wrong, and I will have learned something.
+The empirical agenda is the honest part of this paper. I have specified conditions under which the framework would be falsified, and I have proposed instrumentation to test them. If verification intensity proves robust to volume increases, if cascade fragility does not scale with coupling, if recognition lags do not extend with substrate contamination, then the framework is wrong, and I will have learned something.
 
 But if the framework is approximately right, we are in a regime where the signals of trouble are systematically suppressed by the same dynamics that create the trouble. The forcing event, when it comes, will be a surprise to everyone except those who were already looking at the right variables.
 
@@ -1134,6 +1142,8 @@ I have no institutional affiliations or grant funding to disclose. This is indep
 Akerlof, G. A. (1970). The market for "lemons": Quality uncertainty and the market mechanism. *The Quarterly Journal of Economics*, 84(3), 488–500.
 
 Banerjee, A. V. (1992). A simple model of herd behavior. *The Quarterly Journal of Economics*, 107(3), 797–817.
+
+Beck, V. (2026). *Verification Reversal: Cascades and Synthetic Productivity in an AI-Mediated Economy*. Zenodo. https://doi.org/10.5281/zenodo.18159898
 
 Bikhchandani, S., Hirshleifer, D., & Welch, I. (1992). A theory of fads, fashion, custom, and cultural change as informational cascades. *Journal of Political Economy*, 100(5), 992–1026.
 
